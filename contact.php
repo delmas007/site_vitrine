@@ -1,3 +1,5 @@
+
+
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -13,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message = htmlspecialchars($_POST['message']);
 
         $to = 'angamancedrick@gmail.com';
-        $subject = 'Message depuis le formulaire de contact';
+        $subject = 'Nouveau message depuis le formulaire de contact';
 
         $mail = new PHPMailer(true);
 
@@ -35,24 +37,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->isHTML(true);
             $mail->Subject = $subject;
 
-            // Organisez le corps de l'e-mail avec un en-tête "Reply-To"
-            $mail->Body = '<h1>Message envoyé depuis la page Contact de GroupeLaroche.com</h1>
-                           <p>
-                           <b>Nom : </b>' . $nom . '<br>
-                           <b>Email : </b>' . $email . '<br>
-                           <b>Message : </b>' . $message . '</p>';
+            // Corps de l'e-mail avec en-tête et signature
+            $mail->Body = "
+                <html>
+                    <head>
+                        <title>$subject</title>
+                    </head>
+                    <body>
+                        <h1>Message envoyé depuis la page Contact de GroupeLaroche.com</h1>
+                        <p>
+                            <b>Nom :</b> $nom<br>
+                            <b>Email :</b> $email<br>
+                            <b>Message :</b> $message
+                        </p>
+                        <hr>
+                        <p>
+                            Cordialement,<br>
+                            Votre Nom<br>
+                            Votre Entreprise
+                        </p>
+                    </body>
+                </html>";
 
             // Ajoutez un en-tête "Reply-To" avec l'adresse e-mail de l'expéditeur
             $mail->addReplyTo($email, $nom);
 
             $mail->send();
 
-            // Return a JSON response
+            // Retourne une réponse JSON
             echo json_encode(['success' => true, 'message' => 'Votre message a été envoyé avec succès.']);
         } catch (Exception $e) {
-            // Return a JSON response with error details
+            // Retourne une réponse JSON avec les détails de l'erreur
             echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'envoi du message.', 'error' => $mail->ErrorInfo]);
         }
     }
 }
 ?>
+
