@@ -143,7 +143,7 @@ https://templatemo.com/tm-545-finance-business
                 <h4>Consulting</h4>
                 <p>Nous fournissons des conseils, des recommandations et des solutions à des entreprises ou à des organisations pour les aider à résoudre
                   des problèmes spécifiques, à améliorer leurs processus informatiques ou à mettre en œuvre de nouveaux systèmes technologiques.</p>
-                <a href="" class="filled-button">EN SAVOIR PLUS</a>
+                <a href="services.html" class="filled-button">EN SAVOIR PLUS</a>
               </div>
             </div>
           </div>
@@ -154,7 +154,7 @@ https://templatemo.com/tm-545-finance-business
                 <h4>Infrastructure systeme et reseau</h4>
                 <p> l'ensemble des composants matériels, logiciels, réseaux et services nécessaires pour assurer le bon fonctionnement d'un système informatique
                   au sein de vos entreprises.</p>
-                <a href="" class="filled-button">EN SAVOIR PLUS</a>
+                <a href="services.html" class="filled-button">EN SAVOIR PLUS</a>
               </div>
             </div>
 
@@ -165,7 +165,7 @@ https://templatemo.com/tm-545-finance-business
               <div class="down-content">
                 <h4>Vente de materiel informatique et licensing</h4>
                 <p>Approvisionnement en équipements et logiciels nécessaires au bon fonctionnement des systèmes informatiques de vos entreprises.</p>
-                <a href="" class="filled-button">EN SAVOIR PLUS</a>
+                <a href="services.html" class="filled-button">EN SAVOIR PLUS</a>
               </div>
             </div>
           </div>
@@ -263,37 +263,73 @@ https://templatemo.com/tm-545-finance-business
           </div>
           <div class="col-md-12">
             <div class="contact-form">
-              <form id="contact" action="" method="post">
+              <form id="formulaire-contact" action="contact.php" method="post">
                 <div class="row">
                   <div class="col-lg-4 col-md-12 col-sm-12">
                     <fieldset>
-                      <input name="name" type="text" class="form-control" id="name" placeholder="Nom et prénom" required="">
+                      <input name="name" type="text" class="form-control" id="namee" placeholder="Nom et prénom" required="">
                     </fieldset>
                   </div>
                   <div class="col-lg-4 col-md-12 col-sm-12">
                     <fieldset>
-                      <input name="email" type="text" class="form-control" id="email" pattern="[^ @]*@[^ @]*" placeholder="Address E-Mail" required="">
+                      <input name="email" type="text" class="form-control" id="emaile" pattern="[^ @]*@[^ @]*" placeholder="Adresse E-Mail" required="">
                     </fieldset>
                   </div>
                   <div class="col-lg-4 col-md-12 col-sm-12">
                     <fieldset>
-                      <input name="subject" type="text" class="form-control" id="subject" placeholder="Sujet" required="">
+                      <input name="subject" type="text" class="form-control" id="subjecte" placeholder="Sujet" required="">
                     </fieldset>
                   </div>
                   <div class="col-lg-12">
                     <fieldset>
-                      <textarea name="message" rows="6" class="form-control" id="message" placeholder="Votre Message" required=""></textarea>
+                      <textarea name="message" rows="6" class="form-control" id="messagee" placeholder="Votre Message" required=""></textarea>
                     </fieldset>
                   </div>
                   <div class="col-lg-12">
                     <fieldset>
-                      <button type="submit" id="form-submit" class="border-button">Envoyer le message</button>
+                      <button type="submit" id="bouton-submit" class="border-button">Envoyer le message</button>
                     </fieldset>
                   </div>
                 </div>
               </form>
+              <div id="alert-message" class="text-center mt-4"></div>
             </div>
           </div>
+
+          <script>
+            const formulaire = document.getElementById('formulaire-contact');
+            const boutonSubmit = document.getElementById('bouton-submit');
+
+            formulaire.addEventListener('submit', (event) => {
+              event.preventDefault();
+
+              const formData = new FormData(formulaire);
+
+              fetch('contact.php', {
+                method: 'POST',
+                body: formData
+              })
+                      .then(response => response.json())
+                      .then(data => {
+                        const alertDiv = document.getElementById('alert-message');
+
+                        if (data.success) {
+                          alertDiv.innerHTML = `<div class="alert alert-light">${data.message}</div>`;
+
+                          // Clear input fields after successful submission
+                          formulaire.reset();
+                        } else {
+                          alertDiv.innerHTML = `<div class="alert alert-danger">${data.message} Détails de l'erreur : ${data.error}</div>`;
+                        }
+                      })
+                      .catch(error => {
+                        console.error('Une erreur s\'est produite lors de la communication avec le serveur.', error);
+                      });
+            });
+          </script>
+
+
+
         </div>
       </div>
     </div>
