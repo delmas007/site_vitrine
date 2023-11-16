@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/templatemo_545_finance_business.iml" filepath="$PROJECT_DIR$/.idea/templatemo_545_finance_business.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/laroche.iml" filepath="$PROJECT_DIR$/.idea/laroche.iml" />
     </modules>
   </component>
 </project>
