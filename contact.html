@@ -122,37 +122,64 @@ https://templatemo.com/tm-545-finance-business
           </div>
           <div class="col-md-12">
             <div class="contact-form">
-              <form id="contact" action="" method="post">
+              <form id="formulaire-contact" action="contact.php" method="post">
                 <div class="row">
                   <div class="col-lg-4 col-md-12 col-sm-12">
                     <fieldset>
-                      <input name="name" type="text" class="form-control" id="name" placeholder="Nom et prénom" required="">
+                      <input name="name" type="text" class="form-control" id="namee" placeholder="Nom et prénom" required="">
                     </fieldset>
                   </div>
                   <div class="col-lg-4 col-md-12 col-sm-12">
                     <fieldset>
-                      <input name="email" type="text" class="form-control" id="email" pattern="[^ @]*@[^ @]*" placeholder="Address E-Mail" required="">
+                      <input name="email" type="text" class="form-control" id="emaile" pattern="[^ @]*@[^ @]*" placeholder="Adresse E-Mail" required="">
                     </fieldset>
                   </div>
                   <div class="col-lg-4 col-md-12 col-sm-12">
                     <fieldset>
-                      <input name="subject" type="text" class="form-control" id="subject" placeholder="Sujet" required="">
+                      <input name="subject" type="text" class="form-control" id="subjecte" placeholder="Sujet" required="">
                     </fieldset>
                   </div>
                   <div class="col-lg-12">
                     <fieldset>
-                      <textarea name="message" rows="6" class="form-control" id="message" placeholder="Votre Message" required=""></textarea>
+                      <textarea name="message" rows="6" class="form-control" id="messagee" placeholder="Votre Message" required=""></textarea>
                     </fieldset>
                   </div>
                   <div class="col-lg-12">
                     <fieldset>
-                      <button type="submit" id="form-submit" class="border-button">Envoyer le message</button>
+                      <button type="submit" id="bouton-submit" class="border-button">Envoyer le message</button>
                     </fieldset>
                   </div>
                 </div>
               </form>
             </div>
           </div>
+
+          <script>
+            const formulaire = document.getElementById('formulaire-contact');
+            const boutonSubmit = document.getElementById('bouton-submit');
+
+            formulaire.addEventListener('submit', (event) => {
+              event.preventDefault();
+
+              const formData = new FormData(formulaire);
+
+              fetch('contact.php', {
+                method: 'POST',
+                body: formData
+              })
+                      .then(response => response.json())
+                      .then(data => {
+                        if (data.success) {
+                          // Afficher le message de succès
+                          alert('Votre message a été envoyé avec succès !');
+                        } else {
+                          // Afficher le message d'erreur
+                          alert('Une erreur s\'est produite lors de l\'envoi de votre message.');
+                        }
+                      });
+            });
+          </script>
+
         </div>
       </div>
     </div>
