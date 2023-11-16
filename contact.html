@@ -170,15 +170,17 @@ https://templatemo.com/tm-545-finance-business
                       .then(response => response.json())
                       .then(data => {
                         if (data.success) {
-                          // Afficher le message de succès
-                          alert('Votre message a été envoyé avec succès !');
+                          alert(data.message);
                         } else {
-                          // Afficher le message d'erreur
-                          alert('Une erreur s\'est produite lors de l\'envoi de votre message.');
+                          alert(data.message + ' Détails de l\'erreur : ' + data.error);
                         }
+                      })
+                      .catch(error => {
+                        console.error('Une erreur s\'est produite lors de la communication avec le serveur.', error);
                       });
             });
           </script>
+
 
         </div>
       </div>
