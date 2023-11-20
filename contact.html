@@ -154,8 +154,6 @@ https://templatemo.com/tm-545-finance-business
               <div id="alert-message" class="text-center mt-4"></div>
             </div>
           </div>
-
-
           <script>
             const formulaire = document.getElementById('formulaire-contact');
             const boutonSubmit = document.getElementById('bouton-submit');
@@ -169,14 +167,14 @@ https://templatemo.com/tm-545-finance-business
                 method: 'POST',
                 body: formData
               })
-                      .then(response => response.json())
+                      .then(response => response.ok ? response.json() : Promise.reject('Réponse non valide'))
                       .then(data => {
                         const alertDiv = document.getElementById('alert-message');
 
                         if (data.success) {
                           alertDiv.innerHTML = `<div class="alert alert-light">${data.message}</div>`;
 
-                          // Clear input fields after successful submission
+                          // Efface les champs de saisie après une soumission réussie
                           formulaire.reset();
                         } else {
                           alertDiv.innerHTML = `<div class="alert alert-danger">${data.message} Détails de l'erreur : ${data.error}</div>`;
@@ -186,6 +184,8 @@ https://templatemo.com/tm-545-finance-business
                         console.error('Une erreur s\'est produite lors de la communication avec le serveur.', error);
                       });
             });
+
+
           </script>
 
 

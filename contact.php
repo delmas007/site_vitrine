@@ -1,5 +1,3 @@
-
-
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -12,65 +10,81 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['message'])) {
         $nom = $_POST['name'];
         $email = $_POST['email'];
+        $subject = $_POST['subject'];
         $message = htmlspecialchars($_POST['message']);
 
         $to = 'angamancedrick@gmail.com';
-        $subject = 'Nouveau message depuis le formulaire de contact';
 
         $mail = new PHPMailer(true);
 
         try {
-            // Paramètres du serveur SMTP
+
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'angamancedrick@gmail.com'; // Mettez votre adresse Gmail ici
-            $mail->Password   = 'ztzg ixxg zzew bcxw'; // Mettez votre mot de passe Gmail ici
+            $mail->Username   = 'angamancedrick@gmail.com';
+            $mail->Password   = 'vedp wnno mswt dino';
             $mail->SMTPSecure = 'tls';
             $mail->Port       = 587;
 
-            // Destinataire
+
             $mail->setFrom($email, $nom);
             $mail->addAddress($to);
 
-            // Contenu du message
+
             $mail->isHTML(true);
             $mail->Subject = $subject;
 
-            // Corps de l'e-mail avec en-tête et signature
             $mail->Body = "
                 <html>
                     <head>
                         <title>$subject</title>
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                                line-height: 1.6;
+                                color: #333;
+                            }
+                            .container {
+                                max-width: 600px;
+                                margin: 0 auto;
+                            }
+                            h1 {
+                                color: #0066cc;
+                            }
+                            img {
+                                max-width: 100px;
+                                height: auto;
+                                margin-bottom: 20px;
+                            }
+                        </style>
                     </head>
                     <body>
-                        <h1>Message envoyé depuis la page Contact de GroupeLaroche.com</h1>
-                        <p>
-                            <b>Nom :</b> $nom<br>
-                            <b>Email :</b> $email<br>
-                            <b>Message :</b> $message
-                        </p>
-                        <hr>
-                        <p>
-                            Cordialement,<br>
-                            Votre Nom<br>
-                            Votre Entreprise
-                        </p>
+                        <div class='container'>
+                            <h1>Message envoyé depuis la page Contact de GroupeLaroche.com</h1>
+                            <p>
+                                <b>Nom :</b> $nom<br>
+                                <b>Email :</b> $email<br>
+                                <b>Message :</b> $message
+                            </p>
+                            <hr>
+                            <img src='URL_DU_LOGO' alt='Logo de l\'entreprise'>
+                            <p>
+                                Cordialement,<br>
+                                $nom
+                            </p>
+                        </div>
                     </body>
                 </html>";
-
-            // Ajoutez un en-tête "Reply-To" avec l'adresse e-mail de l'expéditeur
             $mail->addReplyTo($email, $nom);
+            $mail->AddEmbeddedImage('images/service/11.png', 'logo');
+            $mail->Body = str_replace('URL_DU_LOGO', 'cid:logo', $mail->Body);
 
             $mail->send();
-
-            // Retourne une réponse JSON
             echo json_encode(['success' => true, 'message' => 'Votre message a été envoyé avec succès.']);
         } catch (Exception $e) {
-            // Retourne une réponse JSON avec les détails de l'erreur
             echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'envoi du message.', 'error' => $mail->ErrorInfo]);
         }
     }
 }
 ?>
-
