@@ -63,8 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class='container'>
                             <h1>Message envoyé depuis la page Contact de GroupeLaroche.com</h1>
                             <p>
-                                <b>Nom :</b> $nom<br>
                                 <b>Email :</b> $email<br>
+                                <b>Nom :</b> $nom<br>
                                 <b>Message :</b> $message
                             </p>
                             <hr>
